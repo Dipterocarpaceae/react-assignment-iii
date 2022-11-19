@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 const useFetch = (urlEnd) => {
   const url = `https://jsonplaceholder.typicode.com/${urlEnd}`;
   const [data, setData] = useState(null);
+  const fiveData = [];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,7 +19,12 @@ const useFetch = (urlEnd) => {
 
     fetchData();
   });
-  return [data];
+
+  data?.forEach((element) => {
+    if (element.id <= 5) fiveData.push(element);
+  });
+
+  return [fiveData];
 };
 
 export default useFetch;
