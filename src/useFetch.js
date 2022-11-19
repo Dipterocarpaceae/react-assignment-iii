@@ -1,16 +1,23 @@
 import { useState, useEffect } from "react";
 
 const useFetch = (urlEnd) => {
-  let url = "https://jsonplaceholder.typicode.com/";
+  const url = `https://jsonplaceholder.typicode.com/${urlEnd}`;
   const [data, setData] = useState(null);
-  url = url + urlEnd;
 
   useEffect(() => {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => setData(data));
-  }, [url]);
+    const fetchData = async () => {
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        setData(data);
+      } catch (error) {
+        console.log("OOPS, ERROR WHEN FETCHING DATA: ");
+        console.log(error);
+      }
+    };
 
+    fetchData();
+  });
   return [data];
 };
 
